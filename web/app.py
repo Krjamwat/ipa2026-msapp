@@ -48,7 +48,7 @@ def delete_router(id):
 @app.route("/router/<ip>")
 def router_detail(ip):
     records = list(interface_status.find({"router_ip": ip})
-    .sort("timestamp", -1).limit(3))
+                   .sort("timestamp", -1).limit(3))
     return render_template("router_detail.html", ip=ip, records=records)
 
 
