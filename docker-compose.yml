@@ -1,0 +1,74 @@
+#version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}
+    networks:
+      - app-net
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    networks:
+      - app-net
+
+  scheduler:
+    build: ./scheduler
+    command: python -u scheduler.py
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+    networks:
+      - app-net
+    depends_on:
+      - mongo
+      - rabbitmq
+      
+  worker:
+    build: ./worker
+    command: python -u consumer.py
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=${DB_NAME}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+    networks:
+      - app-net
+    depends_on:
+      - mongo
+      - rabbitmq
+
+networks:
+  app-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

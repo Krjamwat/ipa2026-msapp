@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Router</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <h2>Register Router</h2>
+    <form action="/add" method="POST">
+        <label>IP:</label>
+        <input type="text" name="ip" required>
+        <label>Username:</label>
+        <input type="text" name="username" required>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Routers List</h2>
+    <ul>
+        {% for item in data %}
+            <li>
+                <a href="/router/{{ item.ip }}">{{ item.ip }}</a> - {{ item.username }}
+                <form action="/delete/{{ item._id }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
