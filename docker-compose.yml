@@ -31,8 +31,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
     networks:
       - app-net
 
@@ -42,9 +42,9 @@ services:
     environment:
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=${DB_NAME}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
     networks:
       - app-net
     depends_on:
@@ -57,9 +57,9 @@ services:
     environment:
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=${DB_NAME}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - RABBITMQ_USER=${RABBITMQ_USER}
-      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
     networks:
       - app-net
     depends_on:
