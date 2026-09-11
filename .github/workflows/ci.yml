@@ -22,7 +22,7 @@ jobs:
     - name: Install Lint & Format Tools
       run: |
         pip install flake8 black[flake8]
-max-line-length = 88
+      max-line-length = 88
 
     - name: Run flake8 (Lint)
       run: flake8 .
