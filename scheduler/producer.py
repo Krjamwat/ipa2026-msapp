@@ -3,8 +3,8 @@ import pika
 
 
 def produce(host, body):
-    user = os.environ.get("RABBITMQ_USER", "admin")
-    password = os.environ.get("RABBITMQ_PASS", "rabbitmq")
+    user = os.environ.get("RABBITMQ_DEFAULT_USER", "admin")
+    password = os.environ.get("RABBITMQ_DEFAULT_PASS", "rabbitmq")
     credentials = pika.PlainCredentials(user, password)
 
     connection = pika.BlockingConnection(
