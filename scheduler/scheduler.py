@@ -9,7 +9,7 @@ def scheduler():
     INTERVAL = 10.0
     next_run = time.monotonic()
     count = 0
-    rabbitmq_host = os.environ.get("RABBITMQ_DEFAULT_HOST", "rabbitmq")
+    rabbitmq_host = os.environ.get("RABBITMQ_HOST", "rabbitmq")
 
     while True:
         now = time.time()
